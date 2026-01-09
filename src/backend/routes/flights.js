@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const db = await connectDB()
-  const {
+  let {
     departure,
     destination,
     departureDateTime,
@@ -42,6 +42,19 @@ router.post('/', async (req, res) => {
     onboard,
     price
   } = req.body
+  
+  if (typeof layovers === 'string') {
+    layovers = layovers.split(',').map(s => s.trim())
+  } else if (!Array.isArray(layovers)) {
+    layovers = []
+  }
+
+  if (typeof onboard === 'string') {
+    onboard = onboard.split(',').map(s => s.trim())
+  } else if (!Array.isArray(onboard)) {
+    onboard = []
+  }
+  price = Number(price)
 
   if (
     !departure || typeof departure !== 'string' ||
@@ -59,19 +72,18 @@ router.post('/', async (req, res) => {
 
   try {
     const flights_collection = db.collection('flights')
-    const durationMinutes = Math.floor((new Date(arrivalDateTime) - new Date(departureDateTime)) / 60000);
-    const safeLayovers = Array.isArray(layovers) ? layovers : []
-    const safeOnboard = Array.isArray(onboard) ? onboard : []
+    const durationMinutes = Math.floor((new Date(arrivalDateTime) - new Date(departureDateTime)) / 60000)
+
     const result = await flights_collection.insertOne({
       departure,
       destination,
       departureDateTime: new Date(departureDateTime),
       arrivalDateTime: new Date(arrivalDateTime),
       durationMinutes,
-      layovers: safeLayovers,
+      layovers,
       airline,
       baggageAllowance,
-      onboard: safeOnboard,
+      onboard,
       price,
     });
 
@@ -80,5 +92,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Failed to add flight', error: err.message })
   }
 })
+
 
 export default router

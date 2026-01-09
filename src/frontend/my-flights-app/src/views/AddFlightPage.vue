@@ -44,18 +44,17 @@ const goToFrontPage = () => {
 
       <input type="datetime-local" v-model="flight.departureDateTime" class="input" />
       <input type="datetime-local" v-model="flight.arrivalDateTime" class="input" />
-      <input v-model="flight.layover" placeholder="Layover" class="input">
+      <input v-model="flight.layovers" placeholder="Layover" class="input">
       <input v-model="flight.onboard" placeholder="onboard" class="input">
       <input v-model="flight.airline" placeholder="Airline" class="input" />
       <input v-model="flight.baggageAllowance" placeholder="Baggage Allowance" class="input" />
-
-      <input type="number" v-model="flight.price" placeholder="Price" class="input" />
+      <input type="number" v-model.number="flight.price" placeholder="Price" class="input" />
 
       <button 
         type="button" 
         @click="submitFlight" 
         class="bg-green-600 text-white px-4 py-2 rounded"
-        >
+      >
         Save Flight
       </button>
 

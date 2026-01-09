@@ -22,7 +22,6 @@ let db = await connectDB();
 app.use('/api/cities', citiesRoute)
 app.use('/api/search', searchRoute) 
 app.use('/api/flights', flightsRoute)
-app.use()
 
 app.listen(port, () => console.log(`Slusam na portu ${port}`))
 
