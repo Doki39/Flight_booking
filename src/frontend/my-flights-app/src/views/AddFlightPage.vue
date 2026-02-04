@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useFlightStore } from '../stores/flightStore.js'
 import FlightsPageButton from '../components/FlightsPageButton.vue'
 import { useRouter } from 'vue-router'
+import GoBackButton from '../components/GoBackButton.vue'
 
 const flightStore = useFlightStore()
 const router = useRouter()
@@ -34,7 +35,7 @@ const goToFrontPage = () => {
 </script>
 
 <template>
-  <router-link to="/">Go back</router-link>
+  <GoBackButton></GoBackButton>
   <div v-if="flight" class="max-w-xl mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Add Flight</h1>
 

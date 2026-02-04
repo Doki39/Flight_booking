@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
-
+import GoBackButton from '../components/GoBackButton.vue'
 const router = useRouter()
 const authStore = useAuthStore()
 
@@ -59,6 +59,7 @@ const goToRegister = () => {
 </script>
 
 <template>
+  <GoBackButton></GoBackButton>
   <div class="min-h-screen flex items-center justify-center from-blue-500 via-sky-400 to-indigo-500 px-4">
     <div class="w-full max-w-md bg-white/90 backdrop-blur shadow-xl rounded-2xl p-8">
       <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">

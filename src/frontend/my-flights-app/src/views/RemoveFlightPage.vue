@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
-
+import GoBackButton from '../components/GoBackButton.vue'
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -72,7 +72,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-gray-100 py-8 px-4">
-    <router-link to="/">Go back</router-link>
+    <GoBackButton></GoBackButton>
     <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
       <h1 class="text-2xl font-bold mb-4">Remove Flights</h1>
 
