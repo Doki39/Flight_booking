@@ -7,6 +7,8 @@ import { FindCursor } from 'mongodb';
 import searchRoute from "./routes/search.js";
 import flightsRoute from "./routes/flights.js";
 import authRoute from './routes/auth.js';
+import bookingRoute from './routes/booking.js';
+import paidBookingsRoute from './routes/paidBookings.js';
 
 const app = express()
 const port = 3000
@@ -23,59 +25,11 @@ app.use('/api/cities', citiesRoute)
 app.use('/api/search', searchRoute) 
 app.use('/api/flights', flightsRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/bookings', bookingRoute)
+app.use('/api/paidBookings', paidBookingsRoute)
 
 app.listen(port, () => console.log(`Slusam na portu ${port}`))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.get('/flights', (req,res) => {  
-//     let result = flights
-
-//     if(req.query.id){
-//         const inputId = Number(req.query.id)
-//         result = result.filter(f => f.id === inputId)
-//     }
-
-//     if(req.query.price){
-//     const maxprice = Number(req.query.price)
-//     result = result.filter(f => f.price <= maxprice)
-//     }
-    
-//     if(req.query.departure){
-//     const dep = req.query.departure.toLowerCase()
-//     result = result.filter(f => f.departure.toLowerCase() === dep)
-//     }
-
-//     if(req.query.destination){
-//     const des = req.query.destination.toLowerCase()
-//     result = result.filter(f => f.destination.toLowerCase() === des)
-//     }
-
-//     if(req.query.airline){
-//     const aline = req.query.airline.toLowerCase()
-//     result = result.filter(f => f.airline.toLowerCase() === aline)
-//     }  
-
-//     if(req.query.layovers) {
-//     const count = Number(req.query.layovers)
-//     result = result.filter(f => f.layovers.length === count)
-//     }
-
-//     res.json(result)
-// })
 
 app.get('/flights', async (req,res) =>{
     let flights_collection = db.collection('users');

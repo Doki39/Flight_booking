@@ -36,6 +36,19 @@ router.get('/all', async (_req, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const flight = await flights_collection.findOne({ _id: new ObjectId(id) })
+    if (!flight) {
+      return res.status(404).json({ message: 'Flight not found' })
+    }
+    res.status(200).json(flight)
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch flight', error: err.message })
+  }
+})
+
 router.post('/', async (req, res) => {
   const db = await connectDB()
   let {

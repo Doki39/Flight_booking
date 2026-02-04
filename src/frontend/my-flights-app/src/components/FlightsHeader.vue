@@ -72,9 +72,10 @@ const searchFlights = async () => {
   }
 }
 
-const bookFlight = async () => {
-  
+const bookFlight = (flight) => {
+  router.push(`/booking/${flight._id}`)
 }
+
 
 watch(departure, (val) => fetchCitiesDeparture(val))
 watch(destination, (val) => fetchCitiesDestination(val))
@@ -252,7 +253,7 @@ const goToRemoveFlight = () => {
         <div>Flight duration: {{ flight.durationMinutes }} minutes </div>
         <div>Airline: {{ flight.airline }}</div>
         <div>baggage allowance {{ flight.baggageAllowance }}</div>
-        <button @click ="bookFlight" class="bg-blue-500 text-white px-4 py-2 rounded">Book flight</button>
+        <button @click ="bookFlight(flight)" class="bg-blue-500 text-white px-4 py-2 rounded">Book flight</button>
         </li>
     </ul>
     </div>
