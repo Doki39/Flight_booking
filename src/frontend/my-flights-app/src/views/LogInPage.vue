@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/authStore'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const email = ref('')
 const password = ref('')
@@ -31,14 +33,17 @@ const submitLogin = async () => {
       })
     })
 
+    const data = await res.json().catch(() => ({}))
+
     if (!res.ok) {
-      const data = await res.json().catch(() => ({}))
       throw new Error(data.message || 'Login failed')
     }
 
-    // You can store token/user in localStorage here if backend returns it
-    // const data = await res.json()
-    // localStorage.setItem('user', JSON.stringify(data))
+    if (!data.token || !data.user) {
+      throw new Error('Invalid login response from server')
+    }
+
+    authStore.setAuth(data.token, data.user)
 
     router.push('/')
   } catch (e) {

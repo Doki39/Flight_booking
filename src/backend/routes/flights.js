@@ -1,8 +1,8 @@
 import express from 'express'
 import { connectDB } from '../dbConnection.js'
+import { ObjectId } from 'mongodb'
 
 const router = express.Router()
-
 
 const db = await connectDB()
 const flights_collection = db.collection('flights');
@@ -27,6 +27,14 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/all', async (_req, res) => {
+  try {
+    const allFlights = await flights_collection.find({}).toArray()
+    res.status(200).json(allFlights)
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch flights', error: err.message })
+  }
+})
 
 router.post('/', async (req, res) => {
   const db = await connectDB()
@@ -92,5 +100,20 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const result = await flights_collection.deleteOne({ _id: new ObjectId(id) })
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Flight not found' })
+    }
+
+    res.status(200).json({ message: 'Flight deleted successfully' })
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete flight', error: err.message })
+  }
+})
 
 export default router

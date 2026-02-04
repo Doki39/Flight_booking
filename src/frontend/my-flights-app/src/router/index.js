@@ -4,10 +4,12 @@ import FrontPage from '../views/FrontPage.vue'
 import BookingPage from '../views/BookingPage.vue'
 import LogInPage from '../views/LogInPage.vue'
 import RegisterPage from '../views/RegisterPage.vue'
+import RemoveFlightPage from '../views/RemoveFlightPage.vue'
 
 const routes = [
   { path: '/', component: FrontPage },
   { path: '/flights/add', component: AddFlightPage },
+  { path: '/flights/remove', component: RemoveFlightPage },
   { path: '/booking', component: BookingPage },
   { path: '/login', component: LogInPage },
   { path: '/register', component: RegisterPage }

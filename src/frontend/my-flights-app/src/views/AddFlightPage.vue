@@ -34,6 +34,7 @@ const goToFrontPage = () => {
 </script>
 
 <template>
+  <router-link to="/">Go back</router-link>
   <div v-if="flight" class="max-w-xl mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Add Flight</h1>
 

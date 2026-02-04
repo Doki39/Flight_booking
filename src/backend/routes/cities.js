@@ -2,10 +2,10 @@ import express from 'express'
 import { connectDB } from '../dbConnection.js'
 
 const router = express.Router()
+const db = await connectDB()
 
 router.get('/', async (req, res) => {
   try {
-    const db = await connectDB()
     const q = req.query.q || ''
 
     if (q.length < 2) {

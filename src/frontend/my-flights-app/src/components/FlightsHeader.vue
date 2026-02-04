@@ -1,7 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import FlightsPageButton from './FlightsPageButton.vue';
-import LogInButton from './LogInButton.vue';
+import { useAuthStore } from '../stores/authStore'
+
+const router = useRouter()
+const authStore = useAuthStore()
 
 const tripType = ref('round')
 const numberOfPassengers = ref(1)
@@ -68,13 +72,9 @@ const searchFlights = async () => {
   }
 }
 
-
 const bookFlight = async () => {
-
+  
 }
-
-
-
 
 watch(departure, (val) => fetchCitiesDeparture(val))
 watch(destination, (val) => fetchCitiesDestination(val))
@@ -94,6 +94,19 @@ const selectDestinationCity = (city) => {
 const confirmDestinationCity = () => {
   destinationResults.value = []
 }
+
+const goToLogin = () => {
+  router.push('/login')
+}
+
+const handleLogout = () => {
+  authStore.clearAuth()
+  router.push('/')
+}
+
+const goToRemoveFlight = () => {
+  router.push('/flights/remove')
+}
 </script>
 
 <template>
@@ -102,12 +115,35 @@ const confirmDestinationCity = () => {
       <div class="text-2xl font-bold text-white">
         Flight Booking
       </div>
-      <button class="bg-white text-blue-600 px-4 py-2 rounded">
-        <FlightsPageButton></FlightsPageButton>
-      </button>
-      <button class="bg-white text-blue-600 px-4 py-2 rounded">
-        <LogInButton></LogInButton>
-      </button>
+      <div class="flex items-center gap-2">
+        <button
+          v-if="authStore.isAdmin"
+          class="bg-white text-blue-600 px-4 py-2 rounded"
+        >
+          <FlightsPageButton />
+        </button>
+        <button
+          v-if="authStore.isAdmin"
+          @click="goToRemoveFlight"
+          class="bg-white text-blue-600 px-4 py-2 rounded"
+        >
+          Remove Flight
+        </button>
+        <button
+          v-if="!authStore.isLoggedIn"
+          @click="goToLogin"
+          class="bg-white text-blue-600 px-4 py-2 rounded"
+        >
+          Log In
+        </button>
+        <button
+          v-else
+          @click="handleLogout"
+          class="bg-white text-blue-600 px-4 py-2 rounded"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
 
     <div class="flex gap-2 mb-4">
