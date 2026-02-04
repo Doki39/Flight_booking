@@ -4,18 +4,17 @@ import { connectDB } from '../dbConnection.js'
 const router = express.Router()
 
 
+const db = await connectDB()
+const flights_collection = db.collection('flights');
 
 router.get('/', async (req, res) => {
   const { departure, destination } = req.query;
-  const db = await connectDB()
   
   if (!departure || !destination) {
     return res.status(400).json({ message: "Departure or destination missing" });
   }
 
   try {
-    const flights_collection = db.collection('flights');
-
     const matchingFlights = await flights_collection.find({
       departure: { $regex: departure, $options: 'i' },
       destination: { $regex: destination, $options: 'i' }

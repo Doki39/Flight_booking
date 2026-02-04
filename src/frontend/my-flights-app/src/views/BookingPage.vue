@@ -45,7 +45,7 @@ const submitBooking = async () => {
     if (!res.ok) throw new Error('Booking failed')
 
     alert('Booking successful! Proceed to payment.')
-    router.push('/') 
+    router.push('/flights/payment') 
   } catch (err) {
     console.error(err)
     alert('Booking failed')

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import FlightsPageButton from './FlightsPageButton.vue';
+import LogInButton from './LogInButton.vue';
 
 const tripType = ref('round')
 const numberOfPassengers = ref(1)
@@ -105,7 +106,7 @@ const confirmDestinationCity = () => {
         <FlightsPageButton></FlightsPageButton>
       </button>
       <button class="bg-white text-blue-600 px-4 py-2 rounded">
-        Log in
+        <LogInButton></LogInButton>
       </button>
     </div>
 

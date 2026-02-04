@@ -6,6 +6,7 @@ import { connectDB } from './dbConnection.js';
 import { FindCursor } from 'mongodb';
 import searchRoute from "./routes/search.js";
 import flightsRoute from "./routes/flights.js";
+import authRoute from './routes/auth.js';
 
 const app = express()
 const port = 3000
@@ -13,8 +14,7 @@ const corsOptions = {
 origin: ['http://localhost:5173', 'http://example.com', 'http://mydomain.com']
 };
 app.use(express.json());
-app.use(cors(corsOptions));      
-app.use(express.json());
+app.use(cors(corsOptions));
 
 
 let db = await connectDB();
@@ -22,19 +22,9 @@ let db = await connectDB();
 app.use('/api/cities', citiesRoute)
 app.use('/api/search', searchRoute) 
 app.use('/api/flights', flightsRoute)
+app.use('/api/auth', authRoute)
 
 app.listen(port, () => console.log(`Slusam na portu ${port}`))
-
-
-
-
-
-
-
-
-
-
-
 
 
 
